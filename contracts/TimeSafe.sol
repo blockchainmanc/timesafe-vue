@@ -31,8 +31,8 @@ contract TimeSafe {
         lockedUntil = _lockedUntil;
     }
 
-    function unlocked() external returns (bool) {
-        return block.timestamp > lockedUntil;
+    function locked() external returns (bool) {
+        return block.timestamp < lockedUntil;
     }
 
     function deposit() public payable onlyBefore(lockedUntil) hasValue returns (uint depositValue) {
