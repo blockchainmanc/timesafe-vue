@@ -3,6 +3,7 @@
 /* global contract:true */
 /* global it:true */
 /* global assert:true */
+/* global web3:true */
 const TimeSafe = artifacts.require('./TimeSafe.sol')
 
 /**
@@ -76,7 +77,7 @@ contract('TimeSafe', accounts => {
       .catch(ex => console.log(ex))
   })
 
-  it('should sum mulitple deposits together from account 0 when locked', () => {
+  it('should sum multiple deposits together from account 0 when locked', () => {
     let timeSafeInstance
     return TimeSafe.deployed()
       .then(instance => {
@@ -89,4 +90,8 @@ contract('TimeSafe', accounts => {
       .then(result => assert.equal(result.valueOf(), oneEther * 2, 'should be exactly 2 ether in the contract'))
       .catch(ex => console.log(ex))
   })
+
+  // web3.currentProvider.send({jsonrpc: '2.0', method: 'evm_increaseTime', params: [FirstJan2100], id: 0})
+
+
 })

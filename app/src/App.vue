@@ -5,52 +5,44 @@
 </template>
 
 <script>
-//  /* global web3:true */
+  /* global web3:true */
 
-//  import Web3 from 'web3'
+  import Web3 from 'web3'
   import { mapGetters } from 'vuex'
 
   export default {
     name: 'app',
     data () {
       return {
-        accountInterval: null,
-        tickTockInterval: null
+        accountInterval: null
       }
     },
     computed: {
       ...mapGetters(['account'])
     },
     mounted () {
-//      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-//      if (typeof web3 === 'undefined') {
-//        console.error('No web3 detected...')
-//        return
-//      }
-//
-//      if (web3) {
-//        // Use Mist/MetaMask's provider
-//        window.web3 = new Web3(web3.currentProvider)
-//
-//        // keep account updated if user decides to switch
-//        this.$store.dispatch('setAccount', web3.eth.accounts[0])
-//        this.accountInterval = setInterval(() => {
-//          const account = web3.eth.accounts[0]
-//          if (account !== this.account) {
-//            this.$store.dispatch('updateAccount', account)
-//          }
-//        }, 1000)
-//      }
-      this.$store.dispatch('getTotalWagered')
-      this.$store.dispatch('getTotalWageredForOutcomes')
-      this.tickTockInterval = setInterval(() => {
-        this.$store.dispatch('getTotalWagered')
-        this.$store.dispatch('getTotalWageredForOutcomes')
-      }, 5000)
+      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+      if (typeof web3 === 'undefined') {
+        console.error('No web3 detected...')
+        return
+      }
+
+      if (web3) {
+        // Use Mist/MetaMask's provider
+        window.web3 = new Web3(web3.currentProvider)
+
+        // keep account updated if user decides to switch
+        this.$store.dispatch('setAccount', web3.eth.accounts[0])
+        this.accountInterval = setInterval(() => {
+          const account = web3.eth.accounts[0]
+          if (account !== this.account) {
+            this.$store.dispatch('updateAccount', account)
+          }
+        }, 1000)
+      }
     },
     beforeDestroy () {
       clearInterval(this.accountInterval)
-      clearInterval(this.tickTockInterval)
     }
   }
 </script>
