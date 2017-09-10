@@ -64,7 +64,7 @@
   }
 
   section, footer {
-    margin-top: 3em;
+    margin-top: 4em;
   }
 
   label {
@@ -109,8 +109,12 @@
     color: #7f7f7f;
   }
 
+  .alert {
+    color: darkred;
+  }
+
   .logo {
-    float: right;
+    float: left;
     width: 75px;
   }
 </style>

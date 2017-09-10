@@ -7,16 +7,18 @@
     </header>
 
 
-    <section>
-      <div id="wrapper-top">
-        <div>Locked until: <span>{{ lockedUntil }}</span></div>
-      </div>
+    <section id="wrapper-top">
+        <div>
+          <icon name="lock" label="locked" scale="10" v-if="locked" class="alert"></icon>
+          <icon name="unlock" label="unlocked" scale="10" v-if="!locked"></icon>
+        </div>
+        <div id="locked-until"><icon name="clock-o" label="clock" scale="4" v-if="locked" class="muted"></icon><br/>{{ lockedUntil }}</div>
+        <div id="total-ether"><span id="total" :class="{green: totalDeposits !== '0'}">{{ totalDeposits }} ETH</span></div>
     </section>
 
     <section>
-      <div id="wrapper-middle">
-        <div>Total Ether: <span id="total" :class="{green: totalDeposits !== '0'}">{{ totalDeposits }} ETH</span></div>
-      </div>
+      <div>Deposits count: <span>{{ depositsCount }}</span></div>
+      <div>Withdrawals count: <span>{{ withdrawalsCount }}</span></div>
     </section>
 
     <footer></footer>
@@ -33,7 +35,10 @@
     computed: {
       ...mapGetters([
         'lockedUntil',
-        'totalDeposits'
+        'totalDeposits',
+        'depositsCount',
+        'withdrawalsCount',
+        'locked'
       ])
     },
     mounted () {
@@ -67,8 +72,6 @@
 
     display: flex;
     justify-content: center;
-
-    font-size: 32px;
   }
 
   #wrapper-top div {
@@ -76,43 +79,16 @@
     flex: 1;
   }
 
-  #wrapper-middle {
-    display: -webkit-flex;
-    -webkit-justify-content: center;
-
-    display: flex;
-    justify-content: center;
-
-    font-size: 24px;
+  #total-ether {
+    font-size: 48px;
   }
 
-  #wrapper-middle div {
-    -webkit-flex: 1;
-    flex: 1;
-  }
-
-  #wrapper-bottom {
-    display: -webkit-flex;
-    -webkit-justify-content: center;
-
-    display: flex;
-    justify-content: center;
-
-    font-size: 18px;
-    color: darkgray;
-  }
-
-  #wrapper-bottom div {
-    -webkit-flex: 1;
-    flex: 1;
+  #locked-until {
+    font-size: 16px;
   }
 
   #total.green {
     color: #006600;
-    font-weight: bold;
-  }
-
-  .bold {
     font-weight: bold;
   }
 </style>

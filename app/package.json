@@ -1,7 +1,7 @@
 {
-  "name": "mutuel-vue",
+  "name": "timesafe-vue",
   "version": "1.0.0",
-  "description": "simple read-only UI on a smart contract",
+  "description": "simple time safe smart contract",
   "author": "Andy Gray <andy@whatsthescore.co.uk>",
   "private": false,
   "scripts": {
@@ -13,6 +13,7 @@
   "dependencies": {
     "truffle-contract": "^2.0.5",
     "vue": "^2.2.6",
+    "vue-awesome": "^2.3.3",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1",
     "vuex-router-sync": "^4.1.2",

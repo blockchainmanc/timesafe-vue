@@ -5,6 +5,12 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+// font awesome icon component
+// https://github.com/Justineo/vue-awesome
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+Vue.component('icon', Icon)
+
 Vue.config.productionTip = false
 
 sync(store, router)
