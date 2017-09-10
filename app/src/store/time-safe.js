@@ -14,6 +14,7 @@ const timeSafe = {
     locked: ''
   },
   getters: {
+    // lockedUntil: state => new Date(state.lockedUntil * 1000).toDateString(),
     lockedUntil: state => state.lockedUntil,
     totalDeposits: state => web3.fromWei(state.totalDeposits, 'ether'),
     depositsCount: state => state.depositsCount,

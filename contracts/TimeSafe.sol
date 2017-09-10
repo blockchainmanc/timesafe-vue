@@ -27,8 +27,8 @@ contract TimeSafe {
     event Deposit(address _from, uint _value);
     event Withdrawal(address _from, uint _value);
 
-    function TimeSafe(uint _lockedUntil) {
-        lockedUntil = _lockedUntil;
+    function TimeSafe(uint _lockedUntilSecondsForNow) {
+        lockedUntil = block.timestamp + _lockedUntilSecondsForNow;
     }
 
     function locked() external returns (bool) {

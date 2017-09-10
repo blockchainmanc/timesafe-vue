@@ -32,6 +32,11 @@
 
   export default {
     name: 'time-safe',
+    data () {
+      return {
+        lockCheckInterval: null
+      }
+    },
     computed: {
       ...mapGetters([
         'lockedUntil',
@@ -44,6 +49,10 @@
     mounted () {
       this.$store.dispatch('getContractConstants')
       this.$store.dispatch('getContractReadOnlyData')
+
+      this.lockCheckInterval = setInterval(() => {
+        this.$store.dispatch('getContractReadOnlyData')
+      }, 3000)
     },
     methods: {
 //      sendHandler () {
@@ -60,6 +69,9 @@
 //      updateBetOutcome (e) {
 //        this.$store.commit(types.UPDATE_BET_OUTCOME, e.target.value)
 //      }
+    },
+    beforeDestroy () {
+      clearInterval(this.lockCheckInterval)
     }
   }
 </script>
