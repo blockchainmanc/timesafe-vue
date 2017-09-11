@@ -2,17 +2,17 @@
   <div class="time-safe">
 
     <header>
-      <img src="../assets/logo.png" class="logo"/>
-      <h1>TimeSafe</h1>
+      <h1>Time Safe</h1>
     </header>
 
 
-    <section id="wrapper-top">
-      <icon name="lock" label="locked" scale="10" v-if="locked" class="alert"></icon>
-      <icon name="unlock" label="unlocked" scale="10" v-if="!locked"></icon>
+    <section id="locked-until-section">
+      <icon name="lock" label="locked" scale="10" v-if="locked" class="locked"></icon>
+      <icon name="unlock" label="unlocked" scale="10" v-if="!locked" class="unlocked"></icon>
       <div id="locked-until">
-        <icon name="clock-o" label="clock" scale="4" v-bind:class="{ alert: lockedUntil > blockTimestamp }"></icon>
-        <br/>{{ lockedUntil }}
+        <icon name="clock-o" label="clock" scale="4" v-bind:class="{ locked: lockedUntil > blockTimestamp, unlocked: lockedUntil < blockTimestamp}"></icon>
+        <br/>
+        {{ lockedUntil }}
       </div>
     </section>
 
@@ -83,7 +83,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #wrapper-top {
+  #locked-until-section {
     display: -webkit-flex;
     -webkit-justify-content: center;
 
@@ -91,9 +91,17 @@
     justify-content: center;
   }
 
-  #wrapper-top div {
+  #locked-until-section div {
     -webkit-flex: 1;
     flex: 1;
+  }
+
+  #locked-until-section .locked {
+    color: darkred;
+  }
+
+  #locked-until-section .unlocked {
+    color: #006600;
   }
 
   #total-ether {

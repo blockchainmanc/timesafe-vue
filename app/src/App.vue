@@ -5,9 +5,8 @@
 
     <section>
       <hr/>
-      <span id="account">
-      Account: {{ account }}
-    </span>
+      <span id="account">Account: {{ account }}</span>
+      <img src="./assets/logo.png" class="logo"/>
     </section>
   </div>
 </template>
@@ -113,22 +112,26 @@
     color: #006600;
   }
 
+  h1 {
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 1.2em;
+  }
+
   .muted {
     color: #7f7f7f;
   }
 
-  .alert {
-    color: darkred;
-  }
-
   .logo {
-    float: left;
+    float: right;
     width: 75px;
   }
 
   #account {
     color: #7f7f7f;
-    float: right;
     font-size: 0.75em;
   }
 </style>
