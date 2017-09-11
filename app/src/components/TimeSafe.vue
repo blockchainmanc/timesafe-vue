@@ -8,20 +8,24 @@
 
 
     <section id="wrapper-top">
-        <div>
-          <icon name="lock" label="locked" scale="10" v-if="locked" class="alert"></icon>
-          <icon name="unlock" label="unlocked" scale="10" v-if="!locked"></icon>
-        </div>
-        <div id="locked-until"><icon name="clock-o" label="clock" scale="4" v-if="locked" class="muted"></icon><br/>{{ lockedUntil }}</div>
-        <div id="total-ether"><span id="total" :class="{green: totalDeposits !== '0'}">{{ totalDeposits }} ETH</span></div>
+      <icon name="lock" label="locked" scale="10" v-if="locked" class="alert"></icon>
+      <icon name="unlock" label="unlocked" scale="10" v-if="!locked"></icon>
+      <div id="locked-until">
+        <icon name="clock-o" label="clock" scale="4" v-bind:class="{ alert: lockedUntil > blockTimestamp }"></icon>
+        <br/>{{ lockedUntil }}
+      </div>
     </section>
 
+
     <section>
+      <div id="total-ether"><span id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</span></div>
       <div>Deposits count: <span>{{ depositsCount }}</span></div>
       <div>Withdrawals count: <span>{{ withdrawalsCount }}</span></div>
     </section>
 
-    <footer></footer>
+    <footer>
+      Last block timestamp: {{ blockTimestamp }}
+    </footer>
 
   </div>
 </template>
@@ -43,7 +47,8 @@
         'totalDeposits',
         'depositsCount',
         'withdrawalsCount',
-        'locked'
+        'locked',
+        'blockTimestamp'
       ])
     },
     mounted () {
@@ -52,7 +57,7 @@
 
       this.lockCheckInterval = setInterval(() => {
         this.$store.dispatch('getContractReadOnlyData')
-      }, 3000)
+      }, 500)
     },
     methods: {
 //      sendHandler () {
@@ -92,11 +97,12 @@
   }
 
   #total-ether {
-    font-size: 48px;
+    font-size: 3em;
   }
 
   #locked-until {
-    font-size: 16px;
+    font-size: 2em;
+    margin: 1em;
   }
 
   #total.green {

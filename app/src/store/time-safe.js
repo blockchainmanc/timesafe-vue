@@ -11,7 +11,8 @@ const timeSafe = {
     totalDeposits: 0,
     depositsCount: 0,
     withdrawalsCount: 0,
-    locked: ''
+    locked: '',
+    blockTimestamp: 0
   },
   getters: {
     // lockedUntil: state => new Date(state.lockedUntil * 1000).toDateString(),
@@ -19,7 +20,8 @@ const timeSafe = {
     totalDeposits: state => web3.fromWei(state.totalDeposits, 'ether'),
     depositsCount: state => state.depositsCount,
     withdrawalsCount: state => state.withdrawalsCount,
-    locked: state => state.locked
+    locked: state => state.locked,
+    blockTimestamp: state => state.blockTimestamp
   },
   actions: {
     getContractConstants ({commit, state, rootState}) {
@@ -36,7 +38,8 @@ const timeSafe = {
         instance.totalDeposits.call({from: rootState.common.account}),
         instance.depositsCount.call({from: rootState.common.account}),
         instance.withdrawalsCount.call({from: rootState.common.account}),
-        instance.locked.call({from: rootState.common.account})
+        instance.locked.call({from: rootState.common.account}),
+        instance.blockTimestamp.call({from: rootState.common.account})
       ]))
         .then((constants) => commit(types.TIMESAFE_READONLY, constants))
         .catch((err) => {
@@ -54,6 +57,7 @@ const timeSafe = {
       state.depositsCount = constants[1].toString(10)
       state.withdrawalsCount = constants[2].toString(10)
       state.locked = constants[3].valueOf()
+      state.blockTimestamp = constants[4].toString(10)
     }
   },
   strict: debug,

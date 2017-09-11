@@ -12,15 +12,17 @@ const TimeSafe = artifacts.require('./TimeSafe.sol')
 contract('TimeSafe', accounts => {
   const oneEther = 1000000000000000000
 
-  // TimeSafe is deployed with this date - see migrations
-  const FirstJan2100 = 4102444800
+  // TimeSafe is deployed with a date x secs in the future - see migrations
 
-  it('should expose locked until timestamp', () => {
+  it('should expose locked until sometime in the future...', () => {
     return TimeSafe.deployed()
       .then(instance => {
         return instance.lockedUntil.call()
       })
-      .then(result => assert.equal(result.valueOf(), FirstJan2100))
+      .then(result => {
+        console.log(`locked until: ${result.valueOf()}`)
+        assert(result.valueOf() > new Date().getSeconds())
+      })
   })
 
   it('should be locked initially', () => {
@@ -91,7 +93,15 @@ contract('TimeSafe', accounts => {
       .catch(ex => console.log(ex))
   })
 
-  // web3.currentProvider.send({jsonrpc: '2.0', method: 'evm_increaseTime', params: [FirstJan2100], id: 0})
-
-
+  it('should unlock after x secs', (done) => {
+    // wait 40 secs
+    setTimeout(function () {
+      return TimeSafe.deployed()
+        .then(instance => {
+          return instance.locked.call()
+        })
+        .then(result => assert.equal(result.valueOf(), false))
+        .then(() => done())
+    }, 40000)
+  })
 })
