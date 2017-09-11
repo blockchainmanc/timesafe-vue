@@ -65,6 +65,18 @@ const timeSafe = {
           console.error(err)
           commit(types.UPDATE_STATUS, 'Error sending to PM; see log.')
         })
+    },
+    withdrawal ({commit, dispatch, state, rootState}) {
+      commit(types.UPDATE_STATUS, `Withdrawal for ${rootState.common.account}`)
+      TimeSafe.deployed().then(instance => instance.withdrawal({from: rootState.common.account}))
+        .then(() => {
+          dispatch('getContractReadOnlyData')
+          commit(types.UPDATE_STATUS, `Completed Withdrawal for ${rootState.common.account}`)
+        })
+        .catch((err) => {
+          console.error(err)
+          commit(types.UPDATE_STATUS, 'Error sending to PM; see log.')
+        })
     }
   },
   mutations: {

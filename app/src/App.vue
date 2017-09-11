@@ -2,12 +2,11 @@
   <div id="app">
     <router-view></router-view>
 
-
-    <section>
+    <footer>
       <hr/>
       <span id="account">Account: {{ account }}</span>
       <img src="./assets/logo.png" class="logo"/>
-    </section>
+    </footer>
   </div>
 </template>
 
@@ -71,7 +70,7 @@
   }
 
   section, footer {
-    margin-top: 4em;
+    margin-top: 1em;
   }
 
   label {
@@ -127,7 +126,7 @@
 
   .logo {
     float: right;
-    width: 75px;
+    width: 25px;
   }
 
   #account {
