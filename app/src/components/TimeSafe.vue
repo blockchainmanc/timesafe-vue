@@ -10,7 +10,7 @@
       <icon name="lock" label="locked" scale="10" v-if="locked" class="locked"></icon>
       <icon name="unlock" label="unlocked" scale="10" v-if="!locked" class="unlocked"></icon>
       <div id="locked-until">
-        <icon name="clock-o" label="clock" scale="4" v-bind:class="{ locked: lockedUntil > blockTimestamp, unlocked: lockedUntil < blockTimestamp}"></icon>
+        <icon name="clock-o" label="clock" scale="4" v-bind:class="{locked: locked}"></icon>
         <br/>
         {{ lockedUntil }}
       </div>
@@ -23,6 +23,18 @@
       <div>Withdrawals count: <span>{{ withdrawalsCount }}</span></div>
     </section>
 
+    <section>
+      <form @submit.prevent="sendHandler">
+
+        <label for="depositAmount">Deposit amount in ETH: </label>
+        <input type="number" id="depositAmount" placeholder="1" v-bind:value="depositAmount" @input="updateDepositAmount"/>
+
+        <button type="submit">Deposit</button>
+      </form>
+
+      <p id="status">{{ status }}</p>
+    </section>
+
     <footer>
       Last block timestamp: {{ blockTimestamp }}
     </footer>
@@ -32,7 +44,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  //  import * as types from '../store/mutation-types'
+  import * as types from '../store/mutation-types'
 
   export default {
     name: 'time-safe',
@@ -48,7 +60,9 @@
         'depositsCount',
         'withdrawalsCount',
         'locked',
-        'blockTimestamp'
+        'blockTimestamp',
+        'status',
+        'depositAmount'
       ])
     },
     mounted () {
@@ -57,23 +71,20 @@
 
       this.lockCheckInterval = setInterval(() => {
         this.$store.dispatch('getContractReadOnlyData')
-      }, 500)
+      }, 3000)
     },
     methods: {
-//      sendHandler () {
-//        if (isNaN(this.betAmount) || this.betAmount === '0' || this.betAmount === '') {
-//          alert('invalid amount: ' + this.betAmount)
-//          return
-//        }
-//
-//        this.$store.dispatch('bet')
-//      },
-//      updateBetAmount (e) {
-//        this.$store.commit(types.UPDATE_BET_AMOUNT, e.target.value)
-//      },
-//      updateBetOutcome (e) {
-//        this.$store.commit(types.UPDATE_BET_OUTCOME, e.target.value)
-//      }
+      sendHandler () {
+        if (isNaN(this.depositAmount) || this.depositAmount === '0' || this.depositAmount === '') {
+          alert('invalid amount: ' + this.depositAmount)
+          return
+        }
+
+        this.$store.dispatch('deposit')
+      },
+      updateDepositAmount (e) {
+        this.$store.commit(types.TIMESAFE_DEPOSIT_AMOUNT, e.target.value)
+      }
     },
     beforeDestroy () {
       clearInterval(this.lockCheckInterval)
@@ -116,5 +127,10 @@
   #total.green {
     color: #006600;
     font-weight: bold;
+  }
+
+  #status {
+    color: #7f7f7f;
+    padding-top: 1em;
   }
 </style>

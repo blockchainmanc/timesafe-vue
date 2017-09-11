@@ -5,23 +5,26 @@ import { TimeSafe } from '../contracts'
 
 const debug = process.env.NODE_ENV !== 'production'
 
+console.debug(TimeSafe.deployed())
+
 const timeSafe = {
   state: {
-    lockedUntil: 0,
+    lockedUntil: '',
     totalDeposits: 0,
     depositsCount: 0,
     withdrawalsCount: 0,
-    locked: '',
-    blockTimestamp: 0
+    locked: true,
+    blockTimestamp: '',
+    depositAmount: 0
   },
   getters: {
-    // lockedUntil: state => new Date(state.lockedUntil * 1000).toDateString(),
-    lockedUntil: state => state.lockedUntil,
+    lockedUntil: state => new Date(state.lockedUntil * 1000).toLocaleString(),
     totalDeposits: state => web3.fromWei(state.totalDeposits, 'ether'),
     depositsCount: state => state.depositsCount,
     withdrawalsCount: state => state.withdrawalsCount,
     locked: state => state.locked,
-    blockTimestamp: state => state.blockTimestamp
+    blockTimestamp: state => new Date(state.blockTimestamp * 1000).toLocaleString(),
+    depositAmount: state => state.depositAmount
   },
   actions: {
     getContractConstants ({commit, state, rootState}) {
@@ -46,6 +49,22 @@ const timeSafe = {
           console.error(err)
           commit(types.UPDATE_STATUS, 'Error getContractReadOnlyData; see log.')
         })
+    },
+    deposit ({commit, dispatch, state, rootState}) {
+      commit(types.UPDATE_STATUS, `Depositing ${state.depositAmount} ETH from ${rootState.common.account}`)
+      TimeSafe.deployed().then(instance => instance.deposit({
+        from: rootState.common.account,
+        value: web3.toWei(state.depositAmount, 'ether')
+      }))
+        .then(() => {
+          dispatch('getContractReadOnlyData')
+          commit(types.UPDATE_STATUS, `Completed depositing ${state.depositAmount} ETH from ${rootState.common.account}`)
+          commit(types.TIMESAFE_DEPOSIT_AMOUNT, '')
+        })
+        .catch((err) => {
+          console.error(err)
+          commit(types.UPDATE_STATUS, 'Error sending to PM; see log.')
+        })
     }
   },
   mutations: {
@@ -58,6 +77,9 @@ const timeSafe = {
       state.withdrawalsCount = constants[2].toString(10)
       state.locked = constants[3].valueOf()
       state.blockTimestamp = constants[4].toString(10)
+    },
+    [types.TIMESAFE_DEPOSIT_AMOUNT] (state, depositAmount) {
+      state.depositAmount = depositAmount
     }
   },
   strict: debug,
