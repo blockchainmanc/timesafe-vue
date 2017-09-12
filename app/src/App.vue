@@ -65,7 +65,7 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     margin: 60px auto;
-    max-width: 700px;
+    max-width: 1440px;
     padding: 0em 1em;
   }
 
@@ -113,15 +113,12 @@
 
   h1 {
     text-align: center;
+    font-size: 2em;
   }
 
   h2 {
     text-align: center;
     font-size: 1.2em;
-  }
-
-  .muted {
-    color: #7f7f7f;
   }
 
   .logo {

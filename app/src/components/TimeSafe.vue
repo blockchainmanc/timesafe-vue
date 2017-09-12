@@ -5,44 +5,38 @@
       <h1>Time Safe</h1>
     </header>
 
-    <section id="locked-until">
-      <icon name="lock" label="locked" scale="8" v-if="locked" class="locked"></icon>
-      <icon name="unlock" label="unlocked" scale="8" v-if="!locked" class="unlocked"></icon>
+    <section class="content">
+      <div class="columns">
 
-      <span id="locked-until-timstamp">
-        <icon name="clock-o" label="clock" scale="2" v-bind:class="{locked: locked, unlocked: !locked}"></icon> {{ lockedUntil }}
-      </span>
+        <main class="main">
+          <div>
+            <icon name="lock" label="locked" scale="8" v-if="locked" class="locked"></icon>
+            <icon name="unlock" label="unlocked" scale="8" v-if="!locked" class="unlocked"></icon>
+            <div id="locked-until-timestamp">{{ lockedUntil }}</div>
+          </div>
+          <div class="muted">Last block: {{ blockTimestamp }}</div>
+        </main>
 
-    </section>
+        <aside class="sidebar-first">
+          <div id="total-ether"><span id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</span></div>
+          <div>Deposits count: <span>{{ depositsCount }}</span></div>
+          <div>Withdrawals count: <span>{{ withdrawalsCount }}</span></div>
+          <div class="muted">{{ status }}</div>
+        </aside>
 
-    <section id="status">
-      <span>{{ status }}</span>
-    </section>
+        <aside class="sidebar-second">
+          <form @submit.prevent="depositHandler" v-if="locked" id="deposit">
+            <label for="depositAmount">Deposit amount in ETH: </label>
+            <input type="number" id="depositAmount" placeholder="" v-bind:value="depositAmount" @input="updateDepositAmount" min="0"/>
+            <button type="submit">Deposit</button>
+          </form>
 
-    <section id="accounting">
-      <div id="total-ether"><span id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</span></div>
-      <div>Deposits count: <span>{{ depositsCount }}</span></div>
-      <div>Withdrawals count: <span>{{ withdrawalsCount }}</span></div>
-    </section>
-    
-    <section v-if="locked" id="deposit">
-      <form @submit.prevent="depositHandler">
+          <form @submit.prevent="withdrawalHandler" v-if="!locked" id="withdrawal">
+            <button type="submit">Withdrawal</button>
+          </form>
+        </aside>
 
-        <label for="depositAmount">Deposit amount in ETH: </label>
-        <input type="number" id="depositAmount" placeholder="1" v-bind:value="depositAmount" @input="updateDepositAmount"/>
-
-        <button type="submit">Deposit</button>
-      </form>
-    </section>
-
-    <section v-if="!locked" id="withdrawal">
-      <form @submit.prevent="withdrawalHandler">
-        <button type="submit">Withdrawal</button>
-      </form>
-    </section>
-
-    <section>
-      <span>Last block timestamp: {{ blockTimestamp }}</span>
+      </div>
     </section>
 
   </div>
@@ -103,43 +97,59 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #locked-until {
+
+  .content {
     display: -webkit-flex;
     -webkit-justify-content: center;
-
     display: flex;
     justify-content: center;
+    flex: 1;
+    color: #000;
   }
 
-  #locked-until div {
-    -webkit-flex: 1;
+  .columns {
+    display: flex;
     flex: 1;
   }
 
-  #locked-until .locked {
+  .main {
+    flex: 1;
+    order: 2;
+  }
+
+  .sidebar-first {
+    width: 30%;
+    order: 1;
+  }
+
+  .sidebar-second {
+    width: 30%;
+    order: 3;
+  }
+
+  main .locked {
     color: darkred;
   }
 
-  #locked-until .unlocked {
+  main .unlocked {
     color: #006600;
+  }
+
+  .muted {
+    color: #7f7f7f;
   }
 
   #total-ether {
     font-size: 3em;
   }
 
-  #locked-until-timstamp {
+  #locked-until-timestamp {
     font-size: 2em;
-    margin: 1em;
   }
 
   #total.green {
     color: #006600;
     font-weight: bold;
-  }
-
-  #status {
-    color: #7f7f7f;
   }
 
   #withdrawal button {
