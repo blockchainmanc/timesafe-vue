@@ -18,7 +18,7 @@
         </main>
 
         <aside class="sidebar-first">
-          <div id="total-ether"><span id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</span></div>
+          <div><span id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</span></div>
           <div>Deposits count: <span>{{ depositsCount }}</span></div>
           <div>Withdrawals count: <span>{{ withdrawalsCount }}</span></div>
           <div class="muted">{{ status }}</div>
@@ -104,6 +104,7 @@
     display: flex;
     justify-content: center;
     flex: 1;
+    flex-direction: column;
     color: #000;
   }
 
@@ -139,15 +140,13 @@
     color: #7f7f7f;
   }
 
-  #total-ether {
-    font-size: 3em;
-  }
 
   #locked-until-timestamp {
     font-size: 2em;
   }
 
   #total.green {
+    font-size: 3em;
     color: #006600;
     font-weight: bold;
   }
