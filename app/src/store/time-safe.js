@@ -15,7 +15,8 @@ const timeSafe = {
     withdrawalsCount: 0,
     locked: true,
     blockTimestamp: '',
-    depositAmount: 0
+    depositAmount: 0,
+    accountBalance: 0
   },
   getters: {
     lockedUntil: state => new Date(state.lockedUntil * 1000).toLocaleString(),
@@ -24,7 +25,8 @@ const timeSafe = {
     withdrawalsCount: state => state.withdrawalsCount,
     locked: state => state.locked,
     blockTimestamp: state => new Date(state.blockTimestamp * 1000).toLocaleString(),
-    depositAmount: state => state.depositAmount
+    depositAmount: state => state.depositAmount,
+    accountBalance: state => web3.fromWei(state.accountBalance, 'ether')
   },
   actions: {
     getContractConstants ({commit, state, rootState}) {
@@ -42,7 +44,8 @@ const timeSafe = {
         instance.depositsCount.call({from: rootState.common.account}),
         instance.withdrawalsCount.call({from: rootState.common.account}),
         instance.locked.call({from: rootState.common.account}),
-        instance.blockTimestamp.call({from: rootState.common.account})
+        instance.blockTimestamp.call({from: rootState.common.account}),
+        instance.balances.call(rootState.common.account, {from: rootState.common.account})
       ]))
         .then((constants) => commit(types.TIMESAFE_READONLY, constants))
         .catch((err) => {
@@ -89,6 +92,7 @@ const timeSafe = {
       state.withdrawalsCount = constants[2].toString(10)
       state.locked = constants[3].valueOf()
       state.blockTimestamp = constants[4].toString(10)
+      state.accountBalance = constants[5].toString(10)
     },
     [types.TIMESAFE_DEPOSIT_AMOUNT] (state, depositAmount) {
       state.depositAmount = depositAmount

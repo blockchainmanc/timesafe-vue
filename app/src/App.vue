@@ -4,7 +4,6 @@
 
     <footer>
       <hr/>
-      <span id="account">Account: {{ account }}</span>
       <img src="./assets/logo.png" class="logo"/>
     </footer>
   </div>
@@ -24,7 +23,7 @@
       }
     },
     computed: {
-      ...mapGetters(['account'])
+      ...mapGetters([])
     },
     mounted () {
       // Checking if Web3 has been injected by the browser (Mist/MetaMask)
@@ -65,7 +64,7 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     margin: 60px auto;
-    max-width: 1440px;
+    max-width: 960px;
     padding: 0em 1em;
   }
 
@@ -81,7 +80,7 @@
 
   input {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    width: 100%;
+    width: 50%;
     padding: 0.5em;
     font-size: 1em;
     border: 1px solid #ccc;
@@ -124,10 +123,5 @@
   .logo {
     float: right;
     width: 25px;
-  }
-
-  #account {
-    color: #7f7f7f;
-    font-size: 0.75em;
   }
 </style>

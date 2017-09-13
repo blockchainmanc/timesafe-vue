@@ -9,12 +9,12 @@
       <div class="columns">
 
         <main class="main">
-          <div>
+          <div id="lock">
             <icon name="lock" label="locked" scale="8" v-if="locked" class="locked"></icon>
             <icon name="unlock" label="unlocked" scale="8" v-if="!locked" class="unlocked"></icon>
-            <div id="locked-until-timestamp">{{ lockedUntil }}</div>
+            <div id="locked-until-timestamp">Until: {{ lockedUntil }}</div>
+            <div id="last-block-timestamp">Last: {{ blockTimestamp }}</div>
           </div>
-          <div class="muted">Last block: {{ blockTimestamp }}</div>
         </main>
 
         <aside class="sidebar-first">
@@ -34,6 +34,24 @@
           <form @submit.prevent="withdrawalHandler" v-if="!locked" id="withdrawal">
             <button type="submit">Withdrawal</button>
           </form>
+        </aside>
+
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="columns">
+
+        <main class="main">
+        </main>
+
+        <aside class="sidebar-first">
+
+        </aside>
+
+        <aside class="sidebar-second">
+          <div>{{ account }}</div>
+          <div>{{ accountBalance }} ETH</div>
         </aside>
 
       </div>
@@ -62,7 +80,9 @@
         'locked',
         'blockTimestamp',
         'status',
-        'depositAmount'
+        'depositAmount',
+        'account',
+        'accountBalance'
       ])
     },
     mounted () {
@@ -140,9 +160,17 @@
     color: #7f7f7f;
   }
 
+  #lock {
+    text-align: center;
+  }
 
   #locked-until-timestamp {
     font-size: 2em;
+  }
+
+  #last-block-timestamp {
+    font-size: 0.75em;
+    color: #7f7f7f;
   }
 
   #total.green {
