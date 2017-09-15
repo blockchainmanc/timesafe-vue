@@ -5,8 +5,6 @@ import { TimeSafe } from '../contracts'
 
 const debug = process.env.NODE_ENV !== 'production'
 
-console.debug(TimeSafe.deployed())
-
 const timeSafe = {
   state: {
     lockedUntil: '',
@@ -16,7 +14,8 @@ const timeSafe = {
     locked: true,
     blockTimestamp: '',
     depositAmount: 0,
-    accountBalance: 0
+    accountBalance: 0,
+    depositEvents: []
   },
   getters: {
     lockedUntil: state => new Date(state.lockedUntil * 1000).toLocaleString(),
@@ -26,7 +25,8 @@ const timeSafe = {
     locked: state => state.locked,
     blockTimestamp: state => new Date(state.blockTimestamp * 1000).toLocaleString(),
     depositAmount: state => state.depositAmount,
-    accountBalance: state => web3.fromWei(state.accountBalance, 'ether')
+    accountBalance: state => web3.fromWei(state.accountBalance, 'ether'),
+    depositEvents: state => state.depositEvents
   },
   actions: {
     getContractConstants ({commit, state, rootState}) {
@@ -96,6 +96,9 @@ const timeSafe = {
     },
     [types.TIMESAFE_DEPOSIT_AMOUNT] (state, depositAmount) {
       state.depositAmount = depositAmount
+    },
+    [types.TIMESAFE_DEPOSIT_EVENT] (state, event) {
+      state.depositEvents.push(event)
     }
   },
   strict: debug,

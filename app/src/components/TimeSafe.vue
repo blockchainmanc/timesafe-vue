@@ -52,6 +52,8 @@
         <aside class="sidebar-second">
           <div>{{ account }}</div>
           <div>{{ accountBalance }} ETH</div>
+          <hr/>
+          <div>{{ depositEvents }}</div>
         </aside>
 
       </div>
@@ -63,6 +65,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import * as types from '../store/mutation-types'
+  import { TimeSafe } from '../contracts'
 
   export default {
     name: 'time-safe',
@@ -82,7 +85,8 @@
         'status',
         'depositAmount',
         'account',
-        'accountBalance'
+        'accountBalance',
+        'depositEvents'
       ])
     },
     mounted () {
@@ -92,6 +96,18 @@
       this.lockCheckInterval = setInterval(() => {
         this.$store.dispatch('getContractReadOnlyData')
       }, 1000)
+
+      TimeSafe.deployed().then(instance => {
+        const deposits = instance.Deposit({fromBlock: 0, toBlock: 'latest'})
+        deposits.watch((error, result) => {
+          if (error !== null) {
+            this.$store.commit(types.UPDATE_STATUS, 'Error watching events!')
+            return
+          }
+
+          this.$store.commit(types.TIMESAFE_DEPOSIT_EVENT, result)
+        })
+      })
     },
     methods: {
       depositHandler () {
