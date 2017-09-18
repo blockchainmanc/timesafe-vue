@@ -46,14 +46,24 @@
         </main>
 
         <aside class="sidebar-first">
-
+          <div>My Account: {{ account }}</div>
+          <div>My balance: {{ accountBalance }} ETH</div>
         </aside>
 
         <aside class="sidebar-second">
-          <div>{{ account }}</div>
-          <div>{{ accountBalance }} ETH</div>
-          <hr/>
-          <div>{{ depositEvents }}</div>
+          Deposits:
+          <ul id="deposit-events">
+            <li v-for="de in depositEvents">
+              {{ de.args._from }}:  {{ de.args._value }}
+            </li>
+          </ul>
+          <br/>
+          Withdrawals:
+          <ul id="withdrawal-events">
+            <li v-for="we in depositEvents">
+              {{ we.args._from }}:  {{ de.args._value }}
+            </li>
+          </ul>
         </aside>
 
       </div>
@@ -86,7 +96,8 @@
         'depositAmount',
         'account',
         'accountBalance',
-        'depositEvents'
+        'depositEvents',
+        'withdrawalEvents'
       ])
     },
     mounted () {

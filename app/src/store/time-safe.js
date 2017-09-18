@@ -15,7 +15,8 @@ const timeSafe = {
     blockTimestamp: '',
     depositAmount: 0,
     accountBalance: 0,
-    depositEvents: []
+    depositEvents: [],
+    withdrawalEvents: []
   },
   getters: {
     lockedUntil: state => new Date(state.lockedUntil * 1000).toLocaleString(),
@@ -26,7 +27,8 @@ const timeSafe = {
     blockTimestamp: state => new Date(state.blockTimestamp * 1000).toLocaleString(),
     depositAmount: state => state.depositAmount,
     accountBalance: state => web3.fromWei(state.accountBalance, 'ether'),
-    depositEvents: state => state.depositEvents
+    depositEvents: state => state.depositEvents,
+    withdrawalEvents: state => state.withdrawalEvents
   },
   actions: {
     getContractConstants ({commit, state, rootState}) {
@@ -99,6 +101,9 @@ const timeSafe = {
     },
     [types.TIMESAFE_DEPOSIT_EVENT] (state, event) {
       state.depositEvents.push(event)
+    },
+    [types.TIMESAFE_WITHDRAWAL_EVENT] (state, event) {
+      state.withdrawalEvents.push(event)
     }
   },
   strict: debug,

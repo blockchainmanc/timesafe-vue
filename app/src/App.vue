@@ -3,7 +3,6 @@
     <router-view></router-view>
 
     <footer>
-      <hr/>
       <img src="./assets/logo.png" class="logo"/>
     </footer>
   </div>
