@@ -1,6 +1,7 @@
 <template>
   <div id="time-safe-totals">
-    <div><span id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</span></div>
+    <h2>Total held in contract</h2>
+    <div id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</div>
     <div>
       Deposits: <span>{{ depositsCount }}</span>
       Withdrawals: <span>{{ withdrawalsCount }}</span>

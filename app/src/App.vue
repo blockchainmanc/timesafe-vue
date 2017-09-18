@@ -110,13 +110,17 @@
   }
 
   h1 {
+    font-family: 'Audiowide', cursive;
     text-align: center;
-    font-size: 2em;
+    font-size: 4em;
   }
 
   h2 {
-    text-align: center;
-    font-size: 1.2em;
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1em;
   }
 
   .logo {

@@ -1,7 +1,8 @@
 <template>
   <div id="locked-until">
+    <h2>Locked until</h2>
     <locked-icon isLocked="locked"></locked-icon>
-    <div id="locked-until-timestamp">Until: {{ lockedUntil }}</div>
+    <div id="locked-until-timestamp">{{ lockedUntil }}</div>
     <div id="last-block-timestamp">Last: {{ blockTimestamp }}</div>
   </div>
 </template>

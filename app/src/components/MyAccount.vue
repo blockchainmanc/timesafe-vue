@@ -1,7 +1,8 @@
 <template>
   <div id="my-account">
-    <div>My Account: {{ account }}</div>
-    <div>My balance: {{ accountBalance }} ETH</div>
+    <h2>My Account</h2>
+    <div>{{ account }}</div>
+    <div id="my-total" v-bind:class="{ green: accountBalance !== '0' }">{{ accountBalance }} ETH</div>
   </div>
 </template>
 
@@ -20,4 +21,17 @@
 </script>
 
 <style scoped>
+  #my-total {
+    font-size: 2em;
+    color: #7f7f7f;
+    font-weight: bold;
+  }
+
+  #my-total.green {
+    color: #006600;
+  }
+
+  #transactions {
+    padding-top: 2em;
+  }
 </style>

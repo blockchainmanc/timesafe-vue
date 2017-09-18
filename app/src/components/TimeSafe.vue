@@ -23,19 +23,7 @@
         <aside class="sidebar-first">
           <time-safe-total></time-safe-total>
 
-          <div>
-            Transactions:
-            <ul id="deposit-events">
-              <li v-for="depositEvent in depositEvents">
-                + {{ depositEvent.account }}: {{ depositEvent.amount }} ETH
-              </li>
-            </ul>
-            <ul id="withdrawal-events">
-              <li v-for="withdrawalEvent in withdrawalEvents">
-                - {{ withdrawalEvent.args._from }}: {{ withdrawalEvent.args._value }} ETH
-              </li>
-            </ul>
-          </div>
+          <transactions></transactions>
         </aside>
 
       </div>
@@ -48,16 +36,16 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import * as types from '../store/mutation-types'
-  import { TimeSafe } from '../contracts'
   import LockedUntil from './LockedUntil'
   import MyAccount from './MyAccount'
   import DepositForm from './DepositForm'
   import TimeSafeTotal from './TimeSafeTotal'
   import WithdrawalForm from './WithdrawalForm'
+  import Transactions from './Transactions'
 
   export default {
     components: {
+      Transactions,
       WithdrawalForm,
       TimeSafeTotal,
       DepositForm,
@@ -73,9 +61,7 @@
     computed: {
       ...mapGetters([
         'locked',
-        'status',
-        'depositEvents',
-        'withdrawalEvents'
+        'status'
       ])
     },
     mounted () {
@@ -85,27 +71,6 @@
       this.lockCheckInterval = setInterval(() => {
         this.$store.dispatch('getContractReadOnlyData')
       }, 1000)
-
-      TimeSafe.deployed().then(instance => {
-        const deposits = instance.Deposit({fromBlock: 0, toBlock: 'latest'})
-        const withdrawals = instance.Withdrawal({fromBlock: 0, toBlock: 'latest'})
-        deposits.watch((error, result) => {
-          if (error !== null) {
-            this.$store.commit(types.UPDATE_STATUS, 'Error watching events!')
-            return
-          }
-
-          this.$store.commit(types.TIMESAFE_DEPOSIT_EVENT, result)
-        })
-        withdrawals.watch((error, result) => {
-          if (error !== null) {
-            this.$store.commit(types.UPDATE_STATUS, 'Error watching events!')
-            return
-          }
-
-          this.$store.commit(types.TIMESAFE_WITHDRAWAL_EVENT, result)
-        })
-      })
     },
     beforeDestroy () {
       clearInterval(this.lockCheckInterval)
