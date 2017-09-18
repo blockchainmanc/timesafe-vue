@@ -17,11 +17,25 @@
           </div>
         </main>
 
+        <aside class="sidebar-second">
+          <div>My Account: {{ account }}</div>
+          <div>My balance: {{ accountBalance }} ETH</div>
+        </aside>
+
         <aside class="sidebar-first">
           <div><span id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</span></div>
           <div>Deposits count: <span>{{ depositsCount }}</span></div>
           <div>Withdrawals count: <span>{{ withdrawalsCount }}</span></div>
         </aside>
+
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="columns">
+
+        <main class="main">
+        </main>
 
         <aside class="sidebar-second">
           <form @submit.prevent="depositHandler" v-if="locked" id="deposit">
@@ -35,21 +49,7 @@
           </form>
         </aside>
 
-      </div>
-    </section>
-
-    <section class="content">
-      <div class="columns">
-
-        <main class="main">
-        </main>
-
         <aside class="sidebar-first">
-          <div>My Account: {{ account }}</div>
-          <div>My balance: {{ accountBalance }} ETH</div>
-        </aside>
-
-        <aside class="sidebar-second">
           Deposits:
           <ul id="deposit-events">
             <li v-for="de in depositEvents">
