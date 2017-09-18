@@ -1,7 +1,6 @@
 <template>
   <div id="locked-until">
-    <icon name="lock" label="locked" scale="8" v-if="locked" class="locked"></icon>
-    <icon name="unlock" label="unlocked" scale="8" v-if="!locked" class="unlocked"></icon>
+    <locked-icon isLocked="locked"></locked-icon>
     <div id="locked-until-timestamp">Until: {{ lockedUntil }}</div>
     <div id="last-block-timestamp">Last: {{ blockTimestamp }}</div>
   </div>
@@ -9,8 +8,10 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import LockedIcon from './LockedIcon'
 
   export default {
+    components: {LockedIcon},
     name: 'locked-until',
     computed: {
       ...mapGetters([
@@ -23,15 +24,7 @@
 </script>
 
 <style scoped>
-  .locked {
-    color: darkred;
-  }
-
-  .unlocked {
-    color: #006600;
-  }
-
-  #lock {
+  #locked-until {
     text-align: center;
   }
 
