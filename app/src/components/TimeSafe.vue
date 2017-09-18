@@ -110,6 +110,7 @@
 
       TimeSafe.deployed().then(instance => {
         const deposits = instance.Deposit({fromBlock: 0, toBlock: 'latest'})
+        const withdrawals = instance.Withdrawal({fromBlock: 0, toBlock: 'latest'})
         deposits.watch((error, result) => {
           if (error !== null) {
             this.$store.commit(types.UPDATE_STATUS, 'Error watching events!')
@@ -117,6 +118,14 @@
           }
 
           this.$store.commit(types.TIMESAFE_DEPOSIT_EVENT, result)
+        })
+        withdrawals.watch((error, result) => {
+          if (error !== null) {
+            this.$store.commit(types.UPDATE_STATUS, 'Error watching events!')
+            return
+          }
+
+          this.$store.commit(types.TIMESAFE_WITHDRAWAL_EVENT, result)
         })
       })
     },
@@ -200,10 +209,14 @@
     color: #7f7f7f;
   }
 
-  #total.green {
+  #total {
     font-size: 3em;
-    color: #006600;
+    color: #7f7f7f;
     font-weight: bold;
+  }
+
+  #total.green {
+    color: #006600;
   }
 
   #withdrawal button {
