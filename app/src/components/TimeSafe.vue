@@ -9,17 +9,11 @@
       <div class="columns">
 
         <main class="main">
-          <div id="lock">
-            <icon name="lock" label="locked" scale="8" v-if="locked" class="locked"></icon>
-            <icon name="unlock" label="unlocked" scale="8" v-if="!locked" class="unlocked"></icon>
-            <div id="locked-until-timestamp">Until: {{ lockedUntil }}</div>
-            <div id="last-block-timestamp">Last: {{ blockTimestamp }}</div>
-          </div>
+          <locked-until></locked-until>
         </main>
 
         <aside class="sidebar-second">
-          <div>My Account: {{ account }}</div>
-          <div>My balance: {{ accountBalance }} ETH</div>
+          <my-account></my-account>
         </aside>
 
         <aside class="sidebar-first">
@@ -76,8 +70,13 @@
   import { mapGetters } from 'vuex'
   import * as types from '../store/mutation-types'
   import { TimeSafe } from '../contracts'
+  import LockedUntil from './LockedUntil'
+  import MyAccount from './MyAccount'
 
   export default {
+    components: {
+      MyAccount,
+      LockedUntil},
     name: 'time-safe',
     data () {
       return {
@@ -86,16 +85,12 @@
     },
     computed: {
       ...mapGetters([
-        'lockedUntil',
         'totalDeposits',
         'depositsCount',
         'withdrawalsCount',
         'locked',
-        'blockTimestamp',
         'status',
         'depositAmount',
-        'account',
-        'accountBalance',
         'depositEvents',
         'withdrawalEvents'
       ])
@@ -184,28 +179,7 @@
     order: 3;
   }
 
-  main .locked {
-    color: darkred;
-  }
-
-  main .unlocked {
-    color: #006600;
-  }
-
   .muted {
-    color: #7f7f7f;
-  }
-
-  #lock {
-    text-align: center;
-  }
-
-  #locked-until-timestamp {
-    font-size: 2em;
-  }
-
-  #last-block-timestamp {
-    font-size: 0.75em;
     color: #7f7f7f;
   }
 
