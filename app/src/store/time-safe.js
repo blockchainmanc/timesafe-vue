@@ -27,7 +27,9 @@ const timeSafe = {
     blockTimestamp: state => new Date(state.blockTimestamp * 1000).toLocaleString(),
     depositAmount: state => state.depositAmount,
     accountBalance: state => web3.fromWei(state.accountBalance, 'ether'),
-    depositEvents: state => state.depositEvents,
+    depositEvents: state => state.depositEvents.map(de => {
+      return {'account': de.args._from, 'amount': web3.fromWei(de.args._value, 'ether').valueOf()}
+    }),
     withdrawalEvents: state => state.withdrawalEvents
   },
   actions: {
@@ -63,7 +65,7 @@ const timeSafe = {
       }))
         .then(() => {
           dispatch('getContractReadOnlyData')
-          commit(types.UPDATE_STATUS, `Completed depositing ${state.depositAmount} ETH from ${rootState.common.account}`)
+          commit(types.UPDATE_STATUS, `Deposited ${state.depositAmount} ETH from ${rootState.common.account}`)
           commit(types.TIMESAFE_DEPOSIT_AMOUNT, '')
         })
         .catch((err) => {

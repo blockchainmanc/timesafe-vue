@@ -21,7 +21,6 @@
           <div><span id="total" v-bind:class="{ green: totalDeposits !== '0' }">{{ totalDeposits }} ETH</span></div>
           <div>Deposits count: <span>{{ depositsCount }}</span></div>
           <div>Withdrawals count: <span>{{ withdrawalsCount }}</span></div>
-          <div class="muted">{{ status }}</div>
         </aside>
 
         <aside class="sidebar-second">
@@ -54,14 +53,14 @@
           Deposits:
           <ul id="deposit-events">
             <li v-for="de in depositEvents">
-              {{ de.args._from }}:  {{ de.args._value }}
+              {{ de.account }}: {{ de.amount }} ETH
             </li>
           </ul>
           <br/>
           Withdrawals:
           <ul id="withdrawal-events">
-            <li v-for="we in depositEvents">
-              {{ we.args._from }}:  {{ de.args._value }}
+            <li v-for="we in withdrawalEvents">
+              {{ we.args._from }}:  {{ we.args._value }}
             </li>
           </ul>
         </aside>
@@ -69,6 +68,7 @@
       </div>
     </section>
 
+    <div class="muted">{{ status }}</div>
   </div>
 </template>
 

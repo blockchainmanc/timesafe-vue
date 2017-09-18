@@ -63,7 +63,7 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     margin: 60px auto;
-    max-width: 960px;
+    max-width: 1240px;
     padding: 0em 1em;
   }
 
