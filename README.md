@@ -16,15 +16,15 @@ Allows people to lock cryptocurrency in a smart contract until a predefined mome
 
 #### Tech overview
 
-A smart contract and Dapp for [Ethereum](https://www.ethereum.org/) compatible blockchains.
+A smart contract that implements a "Time Safe" in code complemented with a Dapp for working with the contract on [Ethereum](https://www.ethereum.org/) compatible blockchains.
 
 The smart contract is developed in [Solidity](https://solidity.readthedocs.io/en/develop/) programming language.
 
 The [Truffle](http://truffleframework.com/) framework is used to manage, migrate, and test the smart contract.
 
-The project also contains a Dapp (think blockchain webapp) that interacts with the smart contract via [Web3Js](https://github.com/ethereum/wiki/wiki/JavaScript-API). The Dapp utilises the [VueJs](https://vuejs.org/) Javascript framework for building the Dapp's single page structure.
+The project Dapp (think blockchain webapp) interacts with the smart contract via [Web3Js](https://github.com/ethereum/wiki/wiki/JavaScript-API). The Dapp utilises the [VueJs](https://vuejs.org/) Javascript framework for building the Dapp's single page structure.
 
-[Webpack](https://webpack.js.org/) is used to bundle assets. This tool is also utilised for running the local development server. See the Dapp's README for specifics on the running the Dapp with [Truffle](http://truffleframework.com/)
+[Webpack](https://webpack.js.org/) is used to bundle assets for development and production. This tool is also utilised for running the local development server.
 
 ## Local development dependencies
 
