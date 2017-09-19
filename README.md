@@ -31,6 +31,7 @@ The project also contains a Dapp (think blockchain webapp) that interacts with t
 ## Build setup
 
 ``` bash
+# dapp delivered from this folder
 cd app
 
 # add contract to the running blockchain (see Truffle docs for more explanation)
