@@ -27,3 +27,29 @@ The project also contains a Dapp (think blockchain webapp) that interacts with t
 * node > 6.x
 * testrpc
 * metamask
+
+## Build setup
+
+``` bash
+cd app
+
+# add contract to the running blockchain (see Truffle docs for more explanation)
+truffle migrate
+
+# reset contract on the running blockchain (see Truffle docs for more explanation)
+truffle migrate --reset
+
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+```
+
+More details on the VueJs/Webpack setup: [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
