@@ -6,10 +6,13 @@ Allows people to lock cryptocurrency in a smart contract until a predefined mome
 
 #### Tech glossary
 
+* [Ethereum](https://www.ethereum.org/): Blockchain implementation. A decentralized platform that can run smart contracts.
 * [Solidity](https://solidity.readthedocs.io/en/develop/): Solidity is a contract-oriented, high-level language designed to target the Ethereum Virtual Machine (EVM)
 * Dapp: a DApp is an abbreviated form for decentralized application
 * [Web3Js](https://github.com/ethereum/wiki/wiki/JavaScript-API): a javascript lib designed to connect and work with the blockchain
 * [Truffle](http://truffleframework.com/): Truffle is a popular development framework for Ethereum
+* [testrpc](https://github.com/ethereumjs/testrpc): testrpc is a Node.js based Ethereum client for testing and development
+* [MetaMask](https://metamask.io/): Chrome extension that allows management of Ethereum accounts in the browser
 
 #### Tech overview
 
