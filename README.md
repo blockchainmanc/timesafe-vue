@@ -28,7 +28,7 @@ The project Dapp (think blockchain webapp) interacts with the smart contract via
 
 ## Local development dependencies
 
-* truffle > 3.x (install globally?)
+* truffle > 3.x (install globally)
 * node > 6.x (install globally)
 * testrpc > 3.x
 * metamask chrome extension
